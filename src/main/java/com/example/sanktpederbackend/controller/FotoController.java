@@ -45,7 +45,7 @@ public class FotoController {
 
 
 
-    @DeleteMapping("/shop/{id}")
+    @DeleteMapping("/foto/{id}")
     public ResponseEntity<Foto> deleteShop(@PathVariable Integer id) {
         return fotoService.deleteFoto(id);
     }

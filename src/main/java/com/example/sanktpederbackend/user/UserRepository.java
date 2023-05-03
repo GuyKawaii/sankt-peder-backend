@@ -1,7 +1,10 @@
-package com.example.sanktpederbackend.repository;
+package com.example.sanktpederbackend.user;
 
-import com.example.sanktpederbackend.model.user.User;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+  Optional<User> findByEmail(String email);
+
 }

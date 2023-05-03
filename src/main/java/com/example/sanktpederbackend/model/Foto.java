@@ -1,18 +1,29 @@
 package com.example.sanktpederbackend.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import org.springframework.lang.NonNull;
 
 @Entity
 public class Foto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "foto_id")
+    @NonNull
+    @JsonProperty("id")
     private int id;
+    @Column(name = "name")
+    @NonNull
+    @JsonProperty("name")
     private String name;
+    @Column(name = "description")
+    @NonNull
+    @JsonProperty("description")
     private String description;
+    @Column(name = "url")
+    @NonNull
+    @JsonProperty("url")
     private String url;
 
     public Foto() {
