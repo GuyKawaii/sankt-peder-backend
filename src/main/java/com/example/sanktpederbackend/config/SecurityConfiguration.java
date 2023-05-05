@@ -64,7 +64,8 @@ public class SecurityConfiguration {
             .authorizeHttpRequests()
             .requestMatchers(
                     "/api/v1/auth/**",
-                    "http://localhost:63343/**"
+                    "http://localhost:63343/**",
+                    "/api/v1/**"
             )
             .permitAll()
             .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())

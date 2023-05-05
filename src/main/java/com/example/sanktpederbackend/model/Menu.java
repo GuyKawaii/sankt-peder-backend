@@ -1,8 +1,8 @@
 package com.example.sanktpederbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
 
 @Entity
 public class Menu {
@@ -13,27 +13,35 @@ public class Menu {
     @NonNull
     @JsonProperty("id")
     private int id;
+
     @Column(name = "name")
     @NonNull
     @JsonProperty("name")
     private String name;
+
     @Column(name = "description")
     @NonNull
     @JsonProperty("description")
     private String description;
+
     @Column(name = "price")
     @NonNull
     @JsonProperty("price")
     private String price;
 
+    @ManyToOne
+    @JoinColumn(name = "menu_card_id", referencedColumnName = "menu_card_id")
+    private MenuCard menuCard;
+
     public Menu() {
     }
 
-    public Menu(int id, String name, String description, String price) {
+    public Menu(int id, @NonNull String name, @NonNull String description, @NonNull String price, MenuCard menuCard) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.menuCard = menuCard;
     }
 
     public int getId() {
@@ -66,5 +74,13 @@ public class Menu {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public MenuCard getMenuCard() {
+        return menuCard;
+    }
+
+    public void setMenuCard(MenuCard menuCard) {
+        this.menuCard = menuCard;
     }
 }
