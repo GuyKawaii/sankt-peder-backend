@@ -13,7 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -47,23 +49,42 @@ public class AuthenticationService {
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
-    authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(
-            request.getEmail(),
-            request.getPassword()
-        )
-    );
+    int numAttempts = 0;
+    final int MAX_ATTEMPTS = 3;
+
+    while (numAttempts < MAX_ATTEMPTS) {
+      try {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        break;
+      } catch (AuthenticationException e) {
+        numAttempts++;
+        if (numAttempts >= MAX_ATTEMPTS) {
+          throw new BadCredentialsException("Bad credentials", e);
+        }
+      }
+    }
+
     var user = repository.findByEmail(request.getEmail())
-        .orElseThrow();
+            .orElseThrow(() -> new BadCredentialsException("Bad credentials"));
+
     var jwtToken = jwtService.generateToken(user);
     var refreshToken = jwtService.generateRefreshToken(user);
     revokeAllUserTokens(user);
     saveUserToken(user, jwtToken);
-    return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
+    AuthenticationResponse authResponse = AuthenticationResponse.builder()
+            .accessToken(jwtToken)
             .refreshToken(refreshToken)
-        .build();
+            .build();
+
+    return authResponse;
   }
+
+
 
   private void saveUserToken(User user, String jwtToken) {
     var token = Token.builder()
