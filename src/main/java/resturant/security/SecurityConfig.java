@@ -32,12 +32,31 @@ import org.springframework.web.filter.CorsFilter;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Arrays;
+import java.util.List;
 
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 
 @Configuration
 public class SecurityConfig {
+
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(List.of("http://localhost:63343/", "http://localhost:63343"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+//        configuration.setAllowedHeaders(List.of("*"));
+//        configuration.setAllowCredentials(true);
+//        // Add the following line to set the Access-Control-Allow-Origin header
+//        configuration.addExposedHeader("Access-Control-Allow-Origin");
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return new CorsFilter(source);
+//    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,13 +65,13 @@ public class SecurityConfig {
     }
 
     // Use this to fine tune the CORS headers, if needed (Not required for this semester)
-    //@Bean
+    @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOriginPattern("http://localhost:63342");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
@@ -161,6 +180,8 @@ public class SecurityConfig {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 
 
 }
