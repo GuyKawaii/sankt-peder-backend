@@ -131,6 +131,7 @@ public class SecurityConfig {
 
                 // Demonstrates another way to add roles to an endpoint
                 // .requestMatchers(HttpMethod.GET, "/api/demo/admin").hasAuthority("ADMIN")
+                .requestMatchers("/favicon.ico").permitAll() // Allow requests to favicon.ico
                 .anyRequest().authenticated());
 
         return http.build();

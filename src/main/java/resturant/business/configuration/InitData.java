@@ -9,7 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -22,31 +24,49 @@ public class InitData implements CommandLineRunner {
     public void createBasicLunchMenu() {
 
         // Create menu items
-        MenuItem menuItem1 = new MenuItem();
-        menuItem1.setName("Cheeseburger");
-        menuItem1.setDescription("Juicy beef patty with melted cheese on a soft bun");
-        menuItem1.setPrice(new BigDecimal("9.99"));
-//        menuItem1.setPrice("3.99");
+        List<MenuItem> menuItems = new ArrayList<>();
 
-        MenuItem menuItem2 = new MenuItem();
-        menuItem2.setName("Caesar Salad");
-        menuItem2.setDescription("Fresh romaine lettuce with croutons and parmesan cheese");
-        menuItem2.setPrice(new BigDecimal("6.99"));
-//        menuItem2.setPrice("3.99");
+        menuItems.add(new MenuItem(
+                1L,
+                "Sankt Peders hjemmelavede karrysild m. æble og æg",
+                "Herring in homemade curry dressing with eggs (house speciality)\n",
+                new BigDecimal("95"), null));
 
-        MenuItem menuItem3 = new MenuItem();
-        menuItem3.setName("French Fries");
-        menuItem3.setDescription("Crispy potato fries lightly salted");
-        menuItem3.setPrice(new BigDecimal("3.99"));
-//        menuItem3.setPrice("3.99");
+        menuItems.add(new MenuItem(
+                2L,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"), null));
+
+        menuItems.add(new MenuItem(
+                3L,
+                "Lun leverpostej m. bacon og rødbeder og agurkesalat",
+                "Warm liver paste with bacon and pickled cucumber",
+                new BigDecimal("100"), null));
+
+        menuItems.add(new MenuItem(
+                4L,
+                "Ruths kryddersild fra Christiansø m. rødløg og kapers",
+                "Ruth’s pickled herring from 'Christiansø' with onions and capers",
+                new BigDecimal("100"), null));
+
+        menuItems.add(new MenuItem(
+                5L,
+                "”Den Fromme” avocado på ristet rugbrød, rejer og creme fraiche",
+                "”The Pious” Avocado on toasted rye bread with shimps and sour creme",
+                new BigDecimal("125"), null));
+
+        menuItems.add(new MenuItem(
+                6L,
+                "Landskinke m. spejlæg, tomater og purløg",
+                "Ham with fried egg, tomatoes and chives",
+                new BigDecimal("100"), null));
 
         // Save menu items to repository
-        menuItemRepository.saveAll(Arrays.asList(menuItem1, menuItem2, menuItem3));
+        menuItemRepository.saveAll(menuItems);
 
         // Create menu
-        Menu menu = new Menu();
-        menu.setName("Lunch");
-        menu.setMenuItems(Arrays.asList(menuItem1, menuItem2, menuItem3));
+        Menu menu = new Menu(1L, "MENU 11.30 - 21.00", menuItems);
 
         // Save menu to repository
         menuRepository.save(menu);
