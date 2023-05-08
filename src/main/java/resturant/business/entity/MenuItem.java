@@ -1,8 +1,12 @@
 package resturant.business.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -23,12 +27,29 @@ public class MenuItem {
     private String description;
 
     private BigDecimal price;
-//    private String price;
 
     @ManyToMany(mappedBy = "menuItems")
     @JsonBackReference
-    private Set<Menu> menus = new HashSet<>(); // todo maybe use List instead of Set
+    private Set<Menu> menus = new HashSet<>();
 
-    // @OneToOne(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true)
-    // private Photo photo;
+    @OneToOne
+    @JoinColumn(name = "foto_id")
+    private Foto foto;
+
+
+    public MenuItem(Long id, String name, String description, BigDecimal price, Foto foto) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.foto = foto;
+    }
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
 }

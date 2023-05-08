@@ -16,8 +16,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class InitData implements CommandLineRunner {
@@ -30,65 +30,64 @@ public class InitData implements CommandLineRunner {
     @Autowired
     private FotoRepository fotoRepository;
 
-    private void createAndSaveFoto(String name, String description, String url, String imagePath) throws IOException {
-        Foto foto = new Foto();
-        foto.setName(name);
-        foto.setDescription(description);
-        foto.setUrl(url);
+    private Foto createOrGetFoto(String url, String imagePath, MenuItem menuItem) throws IOException {
+        // Check if a Foto with the same URL already exists in the database
+        Optional<Foto> optionalFoto = fotoRepository.findByUrl(url);
 
-        Path path = Paths.get(imagePath);
-        byte[] imageData = Files.readAllBytes(path);
-        foto.setData(imageData);
-
-        fotoRepository.save(foto);
+        if (optionalFoto.isPresent()) {
+            // If it does, reuse it
+            return optionalFoto.get();
+        } else {
+            // If not, create a new one
+            Path path = Paths.get(imagePath);
+            byte[] imageData = Files.readAllBytes(path);
+            Foto foto = new Foto();
+            foto.setUrl(url);
+            foto.setData(imageData);
+            foto.setMenuItem(menuItem);
+            return fotoRepository.save(foto);
+        }
     }
 
-    public void createBasicLunchMenu() {
+
+    public void createBasicLunchMenu() throws IOException {
 
         // Create menu items
         List<MenuItem> menuItems = new ArrayList<>();
 
+        Foto foto1 = createOrGetFoto(
+                "https://example.com/images/karrysild.jpg",
+                "src/main/resources/static/gris.jpg",
+                null);
         menuItems.add(new MenuItem(
-                1L,
+                null,
                 "Sankt Peders hjemmelavede karrysild m. æble og æg",
                 "Herring in homemade curry dressing with eggs (house speciality)\n",
-                new BigDecimal("95"), null));
+                new BigDecimal("95"),
+                foto1));
 
+        Foto foto2 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/Screenshot_1.png",
+                null);
         menuItems.add(new MenuItem(
-                2L,
+                null,
                 "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
-                new BigDecimal("120"), null));
-
-        menuItems.add(new MenuItem(
-                3L,
-                "Lun leverpostej m. bacon og rødbeder og agurkesalat",
-                "Warm liver paste with bacon and pickled cucumber",
-                new BigDecimal("100"), null));
-
-        menuItems.add(new MenuItem(
-                4L,
-                "Ruths kryddersild fra Christiansø m. rødløg og kapers",
-                "Ruth’s pickled herring from 'Christiansø' with onions and capers",
-                new BigDecimal("100"), null));
-
-        menuItems.add(new MenuItem(
-                5L,
-                "”Den Fromme” avocado på ristet rugbrød, rejer og creme fraiche",
-                "”The Pious” Avocado on toasted rye bread with shimps and sour creme",
-                new BigDecimal("125"), null));
-
-        menuItems.add(new MenuItem(
-                6L,
-                "Landskinke m. spejlæg, tomater og purløg",
-                "Ham with fried egg, tomatoes and chives",
-                new BigDecimal("100"), null));
+                new BigDecimal("120"),
+                foto2));
 
         // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
+        // Update menu item photos
+        foto1.setMenuItem(menuItems.get(0));
+        fotoRepository.save(foto1);
+        foto2.setMenuItem(menuItems.get(1));
+        fotoRepository.save(foto2);
+
         // Create menu
-        Menu menu = new Menu(1L, "MENU 11.30 - 21.00", menuItems);
+        Menu menu = new Menu(null, "MENU 11.30 - 21.00", menuItems);
 
         // Save menu to repository
         menuRepository.save(menu);
@@ -97,8 +96,6 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createAndSaveFoto("My Image", "A sample image", "https://example.com/myimage.jpg", "src/main/resources/static/gris.jpg");
-
         // Create basic lunch menu
         createBasicLunchMenu();
     }

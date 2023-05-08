@@ -2,28 +2,17 @@ package resturant.business.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Foto {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "foto_id")
     @JsonProperty("id")
     private int id;
-
-    @Column(name = "name")
-    @JsonProperty("name")
-    private String name;
-
-    @Column(name = "description")
-    @JsonProperty("description")
-    private String description;
 
     @Column(name = "url")
     @JsonProperty("url")
@@ -32,13 +21,16 @@ public class Foto {
     @Column(name = "data", columnDefinition = "BLOB")
     private byte[] data;
 
+    @OneToOne
+    @JoinColumn(name = "menu_item_id")
+    private MenuItem menuItem;
+
     public Foto() {
     }
 
-    public Foto(int id, String name, String description, String url, byte[] data) {
+    public Foto(int id, String url, byte[] data) {
         this.id = id;
-        this.name = name;
-        this.description = description;
+
         this.url = url;
         this.data = data;
     }
@@ -51,21 +43,6 @@ public class Foto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getUrl() {
         return url;
@@ -81,5 +58,12 @@ public class Foto {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+    public MenuItem getMenuItem() {
+        return menuItem;
+    }
+
+    public void setMenuItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
     }
 }
