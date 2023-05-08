@@ -1,14 +1,20 @@
 package resturant.business.configuration;
 
+import resturant.business.entity.Foto;
 import resturant.business.entity.Menu;
 import resturant.business.entity.MenuItem;
+import resturant.business.repository.FotoRepository;
 import resturant.business.repository.MenuItemRepository;
 import resturant.business.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +26,22 @@ public class InitData implements CommandLineRunner {
 
     @Autowired
     private MenuItemRepository menuItemRepository;
+
+    @Autowired
+    private FotoRepository fotoRepository;
+
+    private void createAndSaveFoto(String name, String description, String url, String imagePath) throws IOException {
+        Foto foto = new Foto();
+        foto.setName(name);
+        foto.setDescription(description);
+        foto.setUrl(url);
+
+        Path path = Paths.get(imagePath);
+        byte[] imageData = Files.readAllBytes(path);
+        foto.setData(imageData);
+
+        fotoRepository.save(foto);
+    }
 
     public void createBasicLunchMenu() {
 
@@ -72,8 +94,11 @@ public class InitData implements CommandLineRunner {
         menuRepository.save(menu);
     }
 
+
     @Override
     public void run(String... args) throws Exception {
+        createAndSaveFoto("My Image", "A sample image", "https://example.com/myimage.jpg", "src/main/resources/static/gris.jpg");
+
         // Create basic lunch menu
         createBasicLunchMenu();
     }
