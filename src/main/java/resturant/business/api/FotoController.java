@@ -1,13 +1,16 @@
 package resturant.business.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import resturant.business.entity.Foto;
 import resturant.business.service.FotoService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(value = "*")
@@ -22,8 +25,17 @@ public class FotoController {
     }
 
     @GetMapping("/fotos/{id}")
-    public Foto getFotoById(@PathVariable Integer id) {
-        return fotoService.getFotoById(id).orElseThrow(() -> new RuntimeException("Foto with id: " + id + " not found"));
+    public ResponseEntity<byte[]> getFotoById(@PathVariable Integer id) {
+        Optional<Foto> foto = fotoService.getFotoById(id);
+        if (foto.isPresent()) {
+            Foto foundFoto = foto.get();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
+            headers.setContentLength(foundFoto.getData().length);
+            return new ResponseEntity<>(foundFoto.getData(), headers, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/foto")
