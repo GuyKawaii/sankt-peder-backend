@@ -28,8 +28,9 @@ public class Foto {
     @JsonProperty("url")
     private String url;
 
-    @Column(name = "data", columnDefinition = "BLOB")
+    @Column(name = "data", columnDefinition="MEDIUMBLOB")
     @JsonIgnore
+    @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] data;
 
@@ -38,4 +39,5 @@ public class Foto {
     @JsonBackReference
     private MenuItem menuItem;
 }
+
 

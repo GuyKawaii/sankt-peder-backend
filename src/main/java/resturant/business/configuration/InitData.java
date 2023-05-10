@@ -64,7 +64,7 @@ public class InitData implements CommandLineRunner {
                 "Sankt Peders hjemmelavede karrysild m. æble og æg",
                 "Herring in homemade curry dressing with eggs (house speciality)\n",
                 new BigDecimal("95"),
-                null, foto1));
+                foto1));
 
         Foto foto2 = createOrGetFoto(
                 "https://example.com/images/smoked-mackerel.jpg",
@@ -75,7 +75,7 @@ public class InitData implements CommandLineRunner {
                 "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
-                 null, foto2));
+                foto2));
 
         // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
