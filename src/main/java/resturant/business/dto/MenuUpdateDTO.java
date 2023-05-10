@@ -18,5 +18,5 @@ public class MenuUpdateDTO {
     @JsonProperty("menu")
     private Menu menu;
     @JsonProperty("menuItems")
-    private List<MenuItem> menuItems;
+    private List<MenuItemDTO> menuItems;
 }

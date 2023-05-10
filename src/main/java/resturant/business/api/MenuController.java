@@ -57,18 +57,16 @@ public class MenuController {
     public ResponseEntity<List<MenuItemDTO>> getMenuItemsByMenuId(@PathVariable(value = "menuId") Long menuId) {
         List<MenuItem> menuItems = menuService.getMenuItemsByMenuId(menuId);
         List<MenuItemDTO> menuItemDTOs = menuItems.stream()
-                .map(item -> new MenuItemDTO(item.getId(), item.getName(), item.getDescription(), item.getPrice()))
+                .map(item -> new MenuItemDTO(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getImage()))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(menuItemDTOs, HttpStatus.OK);
     }
-
 
     @PutMapping("/{menuId}/updateMenuAndItems")
     public ResponseEntity<Menu> updateMenuAndItems(@PathVariable(value = "menuId") Long menuId, @RequestBody MenuUpdateDTO menuUpdateDTO) {
         Menu updatedMenu = menuService.updateMenuAndItems(menuId, menuUpdateDTO);
         return new ResponseEntity<>(updatedMenu, HttpStatus.OK);
     }
-
 
 
 }

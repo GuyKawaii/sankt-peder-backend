@@ -32,7 +32,7 @@ public class MenuItem {
     private Set<Menu> menus = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "foto_id")
+    @JoinColumn(name = "image_id")
 //    @JsonBackReference
     private Image image;
 

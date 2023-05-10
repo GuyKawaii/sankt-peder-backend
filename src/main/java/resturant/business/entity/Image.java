@@ -19,7 +19,7 @@ public class Image {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "foto_id")
+    @Column(name = "image_id")
     @JsonProperty("id")
     private int id;
 
