@@ -68,7 +68,7 @@ public class InitData implements CommandLineRunner {
 
         Foto foto2 = createOrGetFoto(
                 "https://example.com/images/smoked-mackerel.jpg",
-                "src/main/resources/static/Screenshot_1.png",
+                "src/main/resources/static/food_6.jpg",
                 null);
         menuItems.add(new MenuItem(
                 null,
