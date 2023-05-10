@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import resturant.business.entity.Foto;
+import resturant.business.entity.Image;
 import resturant.business.repository.FotoRepository;
 
 import java.util.List;
@@ -16,45 +16,45 @@ public class FotoService {
     @Autowired
     FotoRepository fotoRepository;
 
-    public List<Foto> getFotos() {
+    public List<Image> getFotos() {
         return fotoRepository.findAll();
     }
-    public Optional<Foto> getFotoById(Integer id) {
+    public Optional<Image> getFotoById(Integer id) {
         return fotoRepository.findById(id);
     }
-    public ResponseEntity<Foto> putFoto(Foto foto, Integer fotoId) {
+    public ResponseEntity<Image> putFoto(Image image, Integer fotoId) {
         if (doesFotoExist(fotoId)) {
-            foto.setId(fotoId);
-            Foto updatedFoto = fotoRepository.save(foto);
-            return new ResponseEntity<>(updatedFoto, HttpStatus.OK);
+            image.setId(fotoId);
+            Image updatedImage = fotoRepository.save(image);
+            return new ResponseEntity<>(updatedImage, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public ResponseEntity<Foto> deleteFoto(Integer fotoId) {
-        Optional<Foto> optionalFoto = fotoRepository.findById(fotoId);
+    public ResponseEntity<Image> deleteFoto(Integer fotoId) {
+        Optional<Image> optionalFoto = fotoRepository.findById(fotoId);
         if (doesFotoExist(fotoId)) {
-            Foto deleteFoto = optionalFoto.get();
+            Image deleteImage = optionalFoto.get();
             fotoRepository.deleteById(fotoId);
-            return new ResponseEntity<>(deleteFoto, HttpStatus.OK);
+            return new ResponseEntity<>(deleteImage, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<Foto> putFotos(List<Foto> fotos) {
-        for (Foto foto : fotos) {
-            if (doesFotoExist(foto)) fotoRepository.save(foto);
+    public ResponseEntity<Image> putFotos(List<Image> images) {
+        for (Image image : images) {
+            if (doesFotoExist(image)) fotoRepository.save(image);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    public ResponseEntity<Foto> postFoto(Foto foto) {
-        if (doesFotoExist(foto)) {
+    public ResponseEntity<Image> postFoto(Image image) {
+        if (doesFotoExist(image)) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-        Foto postedFoto = fotoRepository.save(foto);
-        return new ResponseEntity<>(postedFoto, HttpStatus.OK);
+        Image postedImage = fotoRepository.save(image);
+        return new ResponseEntity<>(postedImage, HttpStatus.OK);
     }
-    private boolean doesFotoExist(Foto foto) {
-        Integer fotoId = foto.getId();
+    private boolean doesFotoExist(Image image) {
+        Integer fotoId = image.getId();
         return doesFotoExist(fotoId);
     }
 

@@ -1,6 +1,6 @@
 package resturant.business.configuration;
 
-import resturant.business.entity.Foto;
+import resturant.business.entity.Image;
 import resturant.business.entity.Menu;
 import resturant.business.entity.MenuItem;
 import resturant.business.repository.FotoRepository;
@@ -30,9 +30,9 @@ public class InitData implements CommandLineRunner {
     @Autowired
     private FotoRepository fotoRepository;
 
-    private Foto createOrGetFoto(String url, String imagePath, MenuItem menuItem) throws IOException {
+    private Image createOrGetFoto(String url, String imagePath, MenuItem menuItem) throws IOException {
         // Check if a Foto with the same URL already exists in the database
-        Optional<Foto> optionalFoto = fotoRepository.findByUrl(url);
+        Optional<Image> optionalFoto = fotoRepository.findByUrl(url);
 
         if (optionalFoto.isPresent()) {
             // If it does, reuse it
@@ -41,11 +41,11 @@ public class InitData implements CommandLineRunner {
             // If not, create a new one
             Path path = Paths.get(imagePath);
             byte[] imageData = Files.readAllBytes(path);
-            Foto foto = new Foto();
-            foto.setUrl(url);
-            foto.setData(imageData);
-            foto.setMenuItem(menuItem);
-            return fotoRepository.save(foto);
+            Image image = new Image();
+            image.setUrl(url);
+            image.setData(imageData);
+            image.setMenuItem(menuItem);
+            return fotoRepository.save(image);
         }
     }
 
@@ -55,36 +55,83 @@ public class InitData implements CommandLineRunner {
         // Create menu items
         List<MenuItem> menuItems = new ArrayList<>();
 
-        Foto foto1 = createOrGetFoto(
+        Image image1 = createOrGetFoto(
                 "https://example.com/images/karrysild.jpg",
-                "src/main/resources/static/gris.jpg",
+                "src/main/resources/static/food_1.jpg",
                 null);
+        Image image2 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_2.jpg",
+                null);
+        Image image3 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_3.jpg",
+                null);
+        Image image4 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_4.jpg",
+                null);
+        Image image5 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_5.jpg",
+                null);
+        Image image6 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_6.jpg",
+                null);
+
+
         menuItems.add(new MenuItem(
                 null,
                 "Sankt Peders hjemmelavede karrysild m. æble og æg",
                 "Herring in homemade curry dressing with eggs (house speciality)\n",
                 new BigDecimal("95"),
-                foto1));
+                image1));
 
-        Foto foto2 = createOrGetFoto(
-                "https://example.com/images/smoked-mackerel.jpg",
-                "src/main/resources/static/food_6.jpg",
-                null);
         menuItems.add(new MenuItem(
                 null,
                 "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
-                foto2));
+                image2));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image3));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image4));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image5));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image6));
+
 
         // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
         // Update menu item photos
-        foto1.setMenuItem(menuItems.get(0));
-        fotoRepository.save(foto1);
-        foto2.setMenuItem(menuItems.get(1));
-        fotoRepository.save(foto2);
+        image1.setMenuItem(menuItems.get(0));
+        fotoRepository.save(image1);
+        image2.setMenuItem(menuItems.get(1));
+        fotoRepository.save(image2);
 
         // Create menu
         Menu menu = new Menu(null, "MENU 11.30 - 21.00", menuItems);

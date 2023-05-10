@@ -1,7 +1,6 @@
 package resturant.business.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,21 +34,21 @@ public class MenuItem {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "foto_id")
 //    @JsonBackReference
-    private Foto foto;
+    private Image image;
 
-    public MenuItem(Long id, String name, String description, BigDecimal price, Foto foto) {
+    public MenuItem(Long id, String name, String description, BigDecimal price, Image image) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
-        this.foto = foto;
+        this.image = image;
     }
 
-    public Foto getFoto() {
-        return foto;
+    public Image getImage() {
+        return image;
     }
 
-    public void setFoto(Foto foto) {
-        this.foto = foto;
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

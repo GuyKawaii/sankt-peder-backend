@@ -2,10 +2,10 @@ package resturant.business.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import resturant.business.entity.Foto;
+import resturant.business.entity.Image;
 
 import java.util.Optional;
 
-public interface FotoRepository extends JpaRepository<Foto, Integer> {
-    Optional<Foto> findByUrl(String url);
+public interface FotoRepository extends JpaRepository<Image, Integer> {
+    Optional<Image> findByUrl(String url);
 }

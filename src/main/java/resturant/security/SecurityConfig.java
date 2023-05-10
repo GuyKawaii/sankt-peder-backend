@@ -116,7 +116,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/demo/anonymous").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/demo/menu/1/items").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/demo/menu/1").permitAll()
-                .requestMatchers(HttpMethod.GET, "/fotos/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/image/**").permitAll()
                 .requestMatchers("/menu/**").permitAll()
                 .requestMatchers("/menuItem/**").permitAll()
 
