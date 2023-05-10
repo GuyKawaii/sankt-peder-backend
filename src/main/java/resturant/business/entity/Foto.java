@@ -2,6 +2,7 @@ package resturant.business.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
@@ -29,7 +30,7 @@ public class Foto {
 
     @Column(name = "data", columnDefinition = "BLOB")
     @JsonIgnore
-//    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     private byte[] data;
 
     @OneToOne
