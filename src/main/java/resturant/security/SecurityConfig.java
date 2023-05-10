@@ -101,7 +101,6 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
 
                 // menu endpoints
-                .requestMatchers("/menu/**").permitAll()
 
 
                 //Required in order to use the h2-console
@@ -118,6 +117,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/demo/menu/1/items").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/demo/menu/1").permitAll()
                 .requestMatchers(HttpMethod.GET, "/fotos/**").permitAll()
+                .requestMatchers("/menu/**").permitAll()
+                .requestMatchers("/menuItem/**").permitAll()
 
                 //necessary to allow for "nice" JSON Errors
                 .requestMatchers("/error").permitAll()

@@ -32,10 +32,10 @@ public class MenuItem {
     @JsonBackReference
     private Set<Menu> menus = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "foto_id")
+//    @JsonBackReference
     private Foto foto;
-
 
     public MenuItem(Long id, String name, String description, BigDecimal price, Foto foto) {
         this.id = id;

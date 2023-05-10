@@ -1,12 +1,21 @@
 package resturant.business.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Foto {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,51 +28,13 @@ public class Foto {
     private String url;
 
     @Column(name = "data", columnDefinition = "BLOB")
+    @JsonIgnore
+//    @Basic(fetch = FetchType.LAZY)
     private byte[] data;
 
     @OneToOne
     @JoinColumn(name = "menu_item_id")
+    @JsonBackReference
     private MenuItem menuItem;
-
-    public Foto() {
-    }
-
-    public Foto(int id, String url, byte[] data) {
-        this.id = id;
-
-        this.url = url;
-        this.data = data;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public byte[] getData() {
-        return data;
-    }
-
-    public void setData(byte[] data) {
-        this.data = data;
-    }
-    public MenuItem getMenuItem() {
-        return menuItem;
-    }
-
-    public void setMenuItem(MenuItem menuItem) {
-        this.menuItem = menuItem;
-    }
 }
+
