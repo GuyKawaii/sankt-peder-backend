@@ -24,44 +24,41 @@ public class MenuItemService {
         return menuItemRepository.findAll();
     }
 
+    public MenuItem save(MenuItem menuItem) {
+        return menuItemRepository.save(menuItem);
+    }
+
     public Optional<MenuItem> getMenuItem(Long id) {
         return menuItemRepository.findById(id);
     }
-    public ResponseEntity<MenuItem> putMenuItem(MenuItem menuItem, Long menuItemId) {
-        if(doesMenuItemExist(menuItemId)) {
-            menuItem.setId(menuItemId);
+
+    public ResponseEntity<MenuItem> putMenuItem(MenuItem menuItem, Long id) {
+        if(doesMenuItemExist(id)) {
+            menuItem.setId(id);
             MenuItem updatedMenuItem = menuItemRepository.save(menuItem);
             return new ResponseEntity<>(updatedMenuItem, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<MenuItem> deleteMenuItem(Long menuItemId) {
-        Optional<MenuItem> optionalMenuItem = menuItemRepository.findById(menuItemId);
-        if(doesMenuItemExist(menuItemId)) {
-            MenuItem deleteMenuItem = optionalMenuItem.get();
-            menuItemRepository.deleteById(menuItemId);
-            return new ResponseEntity<>(deleteMenuItem, HttpStatus.OK);
+
+    public ResponseEntity<?> deleteMenuItem(Long id) {
+        if(doesMenuItemExist(id)) {
+            menuItemRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    public ResponseEntity<MenuItem> putMenuItems(List<MenuItem> menuItems) {
+
+    public ResponseEntity<?> putMenuItems(List<MenuItem> menuItems) {
         for (MenuItem menuItem : menuItems) {
-            if (doesMenuItemExist(menuItem)) menuItemRepository.save(menuItem);
+            if (doesMenuItemExist(menuItem.getId())) menuItemRepository.save(menuItem);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<MenuItem> postMenu(MenuItem menuItem) {
-        if (doesMenuItemExist(menuItem)) {
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
         MenuItem postedMenuItem = menuItemRepository.save(menuItem);
-        return new ResponseEntity<>(postedMenuItem, HttpStatus.OK);
-    }
-
-    private boolean doesMenuItemExist(MenuItem menuItem) {
-        Long menuItemId = menuItem.getId();
-        return doesMenuItemExist(menuItemId);
+        return new ResponseEntity<>(postedMenuItem, HttpStatus.CREATED);
     }
 
     private boolean doesMenuItemExist(Long id) {
@@ -72,7 +69,6 @@ public class MenuItemService {
     public MenuItem findById(Long id) {
         return menuItemRepository.findById(id).orElse(null);
     }
-
 
     public List<MenuItem> findAllByMenuId(Long name) {
         return menuItemRepository.findMenuItemsByMenuId(name);

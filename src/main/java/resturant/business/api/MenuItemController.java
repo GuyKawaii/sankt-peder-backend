@@ -32,7 +32,8 @@ public class MenuItemController {
     @PostMapping("/postMenuItem")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<MenuItem> postMenu(@RequestBody MenuItem menuItem) {
-        return menuItemService.postMenu(menuItem);
+        MenuItem savedMenuItem = menuItemService.save(menuItem);
+        return new ResponseEntity<>(savedMenuItem, HttpStatus.CREATED);
     }
 
     @PutMapping("/menuItems/{id}")
@@ -42,12 +43,12 @@ public class MenuItemController {
 
     // put multiple items
     @PutMapping("/updateMenuItems")
-    public ResponseEntity<MenuItem> putItems(@RequestBody List<MenuItem> menuItems) {
+    public ResponseEntity<?> putItems(@RequestBody List<MenuItem> menuItems) {
         return menuItemService.putMenuItems(menuItems);
     }
 
-    @DeleteMapping("/deleteMenus/{id}")
-    public ResponseEntity<MenuItem> deleteMenuItems(@PathVariable Long id) {
+    @DeleteMapping("/deleteMenuItem/{id}")
+    public ResponseEntity<?> deleteMenuItem(@PathVariable Long id) {
         return menuItemService.deleteMenuItem(id);
     }
 
