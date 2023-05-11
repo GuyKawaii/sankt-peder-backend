@@ -48,6 +48,10 @@ public class MenuItem {
         return image;
     }
 
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
+    }
+
     public void setImage(Image image) {
         this.image = image;
     }

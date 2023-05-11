@@ -119,6 +119,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/image/**").permitAll()
                 .requestMatchers("/menu/**").permitAll()
                 .requestMatchers("/menuItem/**").permitAll()
+                .requestMatchers("/menu/menus*").permitAll()
+                .requestMatchers("/menuItem/postMenuItem/**").permitAll()
 
                 //necessary to allow for "nice" JSON Errors
                 .requestMatchers("/error").permitAll()

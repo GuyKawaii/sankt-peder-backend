@@ -24,6 +24,11 @@ public class MenuController {
         this.menuService = menuService;
     }
 
+    @GetMapping("/menus")
+    public List<Menu> getMenus() {
+        return menuService.getAllMenus();
+    }
+
     // Create a menu
     @PostMapping
     public ResponseEntity<resturant.business.entity.Menu> createMenu(@RequestBody Menu menu) {
