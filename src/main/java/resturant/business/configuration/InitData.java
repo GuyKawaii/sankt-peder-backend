@@ -84,41 +84,41 @@ public class InitData implements CommandLineRunner {
         menuItems.add(new MenuItem(
                 null,
                 "Sankt Peders hjemmelavede karrysild m. æble og æg",
-                "Herring in homemade curry dressing with eggs (house speciality)\n",
+                "Herring in homemade curry dressing with eggs (house speciality)",
                 new BigDecimal("95"),
                 image1));
 
         menuItems.add(new MenuItem(
                 null,
-                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 12",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
                 image2));
 
         menuItems.add(new MenuItem(
                 null,
-                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 13",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
                 image3));
 
         menuItems.add(new MenuItem(
                 null,
-                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 14",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
                 image4));
 
         menuItems.add(new MenuItem(
                 null,
-                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 15",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
                 image5));
 
         menuItems.add(new MenuItem(
                 null,
-                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme",
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 16",
                 "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
                 new BigDecimal("120"),
                 image6));
@@ -134,7 +134,96 @@ public class InitData implements CommandLineRunner {
         fotoRepository.save(image2);
 
         // Create menu
-        Menu menu = new Menu(null, "MENU 11.30 - 21.00", menuItems);
+        Menu menu = new Menu(null, "EARLY MENU", menuItems);
+
+        // Save menu to repository
+        menuRepository.save(menu);
+    }
+
+    public void createBasicDinnerMenu() throws IOException {
+        // Create menu items
+        List<MenuItem> menuItems = new ArrayList<>();
+
+        Image image1 = createOrGetFoto(
+                "https://example.com/images/karrysild.jpg",
+                "src/main/resources/static/food_1.jpg",
+                null);
+        Image image2 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_2.jpg",
+                null);
+        Image image3 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_3.jpg",
+                null);
+        Image image4 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_4.jpg",
+                null);
+        Image image5 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_5.jpg",
+                null);
+        Image image6 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_6.jpg",
+                null);
+
+
+        menuItems.add(new MenuItem(
+                null,
+                "Sankt Peders hjemmelavede karrysild m. æble og æg",
+                "Herring in homemade curry dressing with eggs (house speciality)",
+                new BigDecimal("95"),
+                image1));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 2",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image2));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 3",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image3));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 4",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image4));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 5",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image5));
+
+        menuItems.add(new MenuItem(
+                null,
+                "\"Sol over Sankt Peder\" Røget makrel, radiser, purløg, æggeblomme 6",
+                "\"Sun over Sankt Peder\" smoked mackerel, radishes, chives, egg yolk",
+                new BigDecimal("120"),
+                image6));
+
+
+        // Save menu items to repository
+        menuItemRepository.saveAll(menuItems);
+
+        // Update menu item photos
+        image1.setMenuItem(menuItems.get(0));
+        fotoRepository.save(image1);
+        image2.setMenuItem(menuItems.get(1));
+        fotoRepository.save(image2);
+
+        // Create menu
+        Menu menu = new Menu(null, "LATER MENU", menuItems);
 
         // Save menu to repository
         menuRepository.save(menu);
@@ -145,5 +234,6 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Create basic lunch menu
         createBasicLunchMenu();
+        createBasicDinnerMenu();
     }
 }
