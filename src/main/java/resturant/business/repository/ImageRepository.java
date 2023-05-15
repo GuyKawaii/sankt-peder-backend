@@ -6,6 +6,6 @@ import resturant.business.entity.Image;
 
 import java.util.Optional;
 
-public interface FotoRepository extends JpaRepository<Image, Integer> {
+public interface ImageRepository extends JpaRepository<Image, Integer> {
     Optional<Image> findByUrl(String url);
 }

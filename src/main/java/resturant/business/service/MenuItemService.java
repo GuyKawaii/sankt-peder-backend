@@ -2,11 +2,15 @@ package resturant.business.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import resturant.business.entity.Image;
 import resturant.business.entity.Menu;
 import resturant.business.entity.MenuItem;
+import resturant.business.repository.ImageRepository;
 import resturant.business.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import resturant.business.repository.MenuRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +18,14 @@ import java.util.Optional;
 @Service
 public class MenuItemService {
     private final MenuItemRepository menuItemRepository;
+    private final MenuRepository menuRepository;
+    private final ImageRepository imageRepository;
 
     @Autowired
-    public MenuItemService(MenuItemRepository menuItemRepository) {
+    public MenuItemService(MenuItemRepository menuItemRepository, MenuRepository menuRepository, ImageRepository imageRepository) {
         this.menuItemRepository = menuItemRepository;
+        this.menuRepository = menuRepository;
+        this.imageRepository = imageRepository;
     }
 
     public List<MenuItem> getMenuItems() {
@@ -37,14 +45,6 @@ public class MenuItemService {
             menuItem.setId(id);
             MenuItem updatedMenuItem = menuItemRepository.save(menuItem);
             return new ResponseEntity<>(updatedMenuItem, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    public ResponseEntity<?> deleteMenuItem(Long id) {
-        if(doesMenuItemExist(id)) {
-            menuItemRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -73,4 +73,30 @@ public class MenuItemService {
     public List<MenuItem> findAllByMenuId(Long name) {
         return menuItemRepository.findMenuItemsByMenuId(name);
     }
+
+    @Transactional
+    public ResponseEntity<?> deleteMenuItem(Long id) {
+        if(doesMenuItemExist(id)) {
+            MenuItem menuItem = menuItemRepository.findById(id).orElse(null);
+            if (menuItem != null) {
+                for (Menu menu : menuItem.getMenus()) {
+                    menu.getMenuItems().remove(menuItem);
+                    menuRepository.save(menu);
+                }
+                // Handle associated Image before deleting MenuItem
+                Image image = menuItem.getImage();
+                if (image != null) {
+                    image.setMenuItem(null); // set the menuItem of the image to null
+                    imageRepository.delete(image);  // delete the image
+                    menuItem.setImage(null);
+                    menuItemRepository.save(menuItem);
+                }
+            }
+            menuItemRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
 }

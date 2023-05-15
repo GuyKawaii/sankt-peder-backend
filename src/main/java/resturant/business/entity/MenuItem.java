@@ -31,9 +31,8 @@ public class MenuItem {
     @JsonBackReference
     private Set<Menu> menus = new HashSet<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "image_id")
-//    @JsonBackReference
     private Image image;
 
     public MenuItem(Long id, String name, String description, BigDecimal price, Image image) {

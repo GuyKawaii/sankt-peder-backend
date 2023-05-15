@@ -3,7 +3,7 @@ package resturant.business.configuration;
 import resturant.business.entity.Image;
 import resturant.business.entity.Menu;
 import resturant.business.entity.MenuItem;
-import resturant.business.repository.FotoRepository;
+import resturant.business.repository.ImageRepository;
 import resturant.business.repository.MenuItemRepository;
 import resturant.business.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,11 @@ public class InitData implements CommandLineRunner {
     private MenuItemRepository menuItemRepository;
 
     @Autowired
-    private FotoRepository fotoRepository;
+    private ImageRepository imageRepository;
 
     private Image createOrGetFoto(String url, String imagePath, MenuItem menuItem) throws IOException {
         // Check if a Foto with the same URL already exists in the database
-        Optional<Image> optionalFoto = fotoRepository.findByUrl(url);
+        Optional<Image> optionalFoto = imageRepository.findByUrl(url);
 
         if (optionalFoto.isPresent()) {
             // If it does, reuse it
@@ -45,7 +45,7 @@ public class InitData implements CommandLineRunner {
             image.setUrl(url);
             image.setData(imageData);
             image.setMenuItem(menuItem);
-            return fotoRepository.save(image);
+            return imageRepository.save(image);
         }
     }
 
@@ -56,27 +56,27 @@ public class InitData implements CommandLineRunner {
         List<MenuItem> menuItems = new ArrayList<>();
 
         Image image1 = createOrGetFoto(
-                "https://example.com/images/karrysild.jpg",
+                "https://example.com/images/1",
                 "src/main/resources/static/food_1.jpg",
                 null);
         Image image2 = createOrGetFoto(
-                "https://example.com/images/smoked-mackerel.jpg",
+                "https://example.com/images/2",
                 "src/main/resources/static/food_2.jpg",
                 null);
         Image image3 = createOrGetFoto(
-                "https://example.com/images/smoked-mackerel.jpg",
+                "https://example.com/images/3",
                 "src/main/resources/static/food_3.jpg",
                 null);
         Image image4 = createOrGetFoto(
-                "https://example.com/images/smoked-mackerel.jpg",
+                "https://example.com/images/4",
                 "src/main/resources/static/food_4.jpg",
                 null);
         Image image5 = createOrGetFoto(
-                "https://example.com/images/smoked-mackerel.jpg",
+                "https://example.com/images/5",
                 "src/main/resources/static/food_5.jpg",
                 null);
         Image image6 = createOrGetFoto(
-                "https://example.com/images/smoked-mackerel.jpg",
+                "https://example.com/images/6",
                 "src/main/resources/static/food_6.jpg",
                 null);
 
@@ -129,9 +129,17 @@ public class InitData implements CommandLineRunner {
 
         // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
-        fotoRepository.save(image1);
+        imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
-        fotoRepository.save(image2);
+        imageRepository.save(image2);
+        image3.setMenuItem(menuItems.get(2));
+        imageRepository.save(image3);
+        image4.setMenuItem(menuItems.get(3));
+        imageRepository.save(image4);
+        image5.setMenuItem(menuItems.get(4));
+        imageRepository.save(image5);
+        image6.setMenuItem(menuItems.get(5));
+        imageRepository.save(image6);
 
         // Create menu
         Menu menu = new Menu(null, "EARLY MENU", menuItems);
@@ -218,9 +226,9 @@ public class InitData implements CommandLineRunner {
 
         // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
-        fotoRepository.save(image1);
+        imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
-        fotoRepository.save(image2);
+        imageRepository.save(image2);
 
         // Create menu
         Menu menu = new Menu(null, "LATER MENU", menuItems);
@@ -234,6 +242,6 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         // Create basic lunch menu
         createBasicLunchMenu();
-        createBasicDinnerMenu();
+//        createBasicDinnerMenu();
     }
 }

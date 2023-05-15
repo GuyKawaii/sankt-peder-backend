@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import resturant.business.entity.Menu;
-import resturant.business.entity.MenuItem;
 
 import java.util.List;
 

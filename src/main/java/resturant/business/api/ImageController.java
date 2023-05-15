@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import resturant.business.entity.Image;
-import resturant.business.service.FotoService;
+import resturant.business.service.ImageService;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,15 +16,15 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class ImageController {
 
-    private final FotoService fotoService;
+    private final ImageService imageService;
 
-    public ImageController(FotoService fotoService) {
-        this.fotoService = fotoService;
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<byte[]> getImageById(@PathVariable Integer id) {
-        Optional<Image> foto = fotoService.getFotoById(id);
+        Optional<Image> foto = imageService.getFotoById(id);
         if (foto.isPresent()) {
             Image foundImage = foto.get();
 
@@ -43,23 +43,23 @@ public class ImageController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Image> postImage(@RequestBody Image image) {
-        return fotoService.postFoto(image);
+        return imageService.postFoto(image);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Image> putImage(@PathVariable Integer id, @RequestBody Image image) {
-        return fotoService.putFoto(image, id);
+        return imageService.putFoto(image, id);
     }
 
     // put multiple items
     @PutMapping
     public ResponseEntity<Image> putImages(@RequestBody List<Image> images) {
-        return fotoService.putFotos(images);
+        return imageService.putFotos(images);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Image> deleteImage(@PathVariable Integer id) {
-        return fotoService.deleteFoto(id);
+        return imageService.deleteFoto(id);
     }
 }
 
