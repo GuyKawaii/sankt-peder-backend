@@ -113,14 +113,32 @@ public class SecurityConfig {
                 .requestMatchers("/api/cookie/**").permitAll()
 
                 //Allow anonymous access to this endpoint
+                .requestMatchers(HttpMethod.GET, "/menu/menus").permitAll()
+                .requestMatchers(HttpMethod.GET, "/menu/{menuId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/menu/{menuId}/items").permitAll()
+                .requestMatchers(HttpMethod.POST, "/menu").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/menu/{menuId}").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/menu/{menuId}").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/menu/{menuId}/items").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/menu/{menuId}/updateMenuAndItems").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/menuItem/menuItems").permitAll()
+                .requestMatchers(HttpMethod.POST, "/menuItem/postMenuItem").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/menuItem/menuItems/{id}").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/menuItem/updateMenuItems").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/menuItem/deleteMenuItem/{id}").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/menuItem/{menuItemId}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/image/{id}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/image").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/image/{id}").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/image").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/image/{id}").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/demo/anonymous").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/demo/menu/1/items").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/demo/menu/1").permitAll()
-                .requestMatchers(HttpMethod.GET, "/image/**").permitAll()
-                .requestMatchers("/menu/**").permitAll()
-                .requestMatchers("/menuItem/**").permitAll()
-                .requestMatchers("/menu/menus*").permitAll()
-                .requestMatchers("/menuItem/postMenuItem/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/demo/authenticated").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/demo/user-admin").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/demo/admin").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/demo/user").hasAuthority("USER")
+                .requestMatchers(HttpMethod.GET, "/api/demo/user-fromtoken").permitAll()
+                // ...
 
                 //necessary to allow for "nice" JSON Errors
                 .requestMatchers("/error").permitAll()
@@ -185,8 +203,6 @@ public class SecurityConfig {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
 
 
 }
