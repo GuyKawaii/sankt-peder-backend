@@ -376,6 +376,301 @@ public class InitData implements CommandLineRunner {
         // Save menu to repository
         menuRepository.save(menu);
     }
+    public void createMenuOver15() throws IOException {
+        // Create menu items
+        List<MenuItem> menuItems = new ArrayList<>();
+
+        Image image1 = createOrGetFoto(
+                "https://example.com/images/karrysild.jpg",
+                "src/main/resources/static/food_1.jpg",
+                null);
+        Image image2 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_2.jpg",
+                null);
+        Image image3 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_3.jpg",
+                null);
+        Image image4 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_4.jpg",
+                null);
+        Image image5 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_5.jpg",
+                null);
+        Image image6 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_6.jpg",
+                null);
+
+
+        menuItems.add(new MenuItem(
+                null,
+                "Sankt Peders hjemmelavede karrysild m. æble og æg",
+                "Herring in homemade curry dressing with eggs (house speciality)",
+                new BigDecimal("95"),
+                image1));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Ruths kryddersild fra Christiansø m. rødløg og kapers",
+                "Ruth’s pickled herring from \"Christiansø\" with onions and capers",
+                new BigDecimal("95"),
+                image2));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Røget ål m. lun røræg og purløg",
+                "Smoked eel with scrambled egg and chives",
+                new BigDecimal("145"),
+                image3));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Pandestegt rødspættefilet m. remoulade",
+                "Pan-fried filet of plaice with pickled mayo",
+                new BigDecimal("140"),
+                image4));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Røget færøsk laks m. urtecreme",
+                "Smoked salmon from the Faroe Islands with spinach stew",
+                new BigDecimal("125"),
+                image5));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Hjemmelavet hønsesalat m. bacon og asparges",
+                "Homemade chicken mayo-salad with bacon and asparagus on toast",
+                new BigDecimal("100"),
+                image6));
+        menuItems.add(new MenuItem(
+                null,
+                "Lun flæskesteg m. rødkål og agurkesalat",
+                "Warm roast pork with red cabbage and pickled cucumber",
+                new BigDecimal("110"),
+                image6));
+        menuItems.add(new MenuItem(
+                null,
+                "Lun leverpostej m. bacon og rødbeder og agurkesalat",
+                "Warm liver paste with bacon and pickled cucumber",
+                new BigDecimal("100"),
+                image6));
+        menuItems.add(new MenuItem(
+                null,
+                "Ostefad med kiks og druer",
+                "Assorted cheeses with crackers and grapes",
+                new BigDecimal("125"),
+                image6));
+        menuItems.add(new MenuItem(
+                null,
+                "Hjemmelavet dessert",
+                "Homemade dessert",
+                new BigDecimal("80"),
+                image6));
+
+
+        // Save menu items to repository
+        menuItemRepository.saveAll(menuItems);
+
+        // Update menu item photos
+        image1.setMenuItem(menuItems.get(0));
+        imageRepository.save(image1);
+        image2.setMenuItem(menuItems.get(1));
+        imageRepository.save(image2);
+
+        // Create menu
+        Menu menu = new Menu(null, "MENUKORT 10-50 PERSONER", menuItems);
+
+        // Save menu to repository
+        menuRepository.save(menu);
+    }
+
+    public void createJuleMenu() throws IOException {
+        // Create menu items
+        List<MenuItem> menuItems = new ArrayList<>();
+
+        Image image1 = createOrGetFoto(
+                "https://example.com/images/karrysild.jpg",
+                "src/main/resources/static/food_1.jpg",
+                null);
+        Image image2 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_2.jpg",
+                null);
+        Image image3 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_3.jpg",
+                null);
+        Image image4 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_4.jpg",
+                null);
+        Image image5 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_5.jpg",
+                null);
+        Image image6 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_6.jpg",
+                null);
+
+
+        menuItems.add(new MenuItem(
+                null,
+                "Hjemmelavet karrysild & Christians Ø sild",
+                "JULE MENU TIL KR. 475,- PR. PERSON - Søndag til onsdag og KR. 445,-",
+                new BigDecimal("0"),
+                image1));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Pandestegt rødspættefilet m. hjemmerørt remoulade",
+                "JULE MENU TIL KR. 475,- PR. PERSON - Søndag til onsdag og KR. 445,-",
+                new BigDecimal("0"),
+                image2));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Hjemmelavet hønsesalat m. asparges og bacon",
+                "JULE MENU TIL KR. 475,- PR. PERSON - Søndag til onsdag og KR. 445,-",
+                new BigDecimal("0"),
+                image3));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Flæskesteg m. hjemmelavet rødkål og surt",
+                "JULE MENU TIL KR. 475,- PR. PERSON - Søndag til onsdag og KR. 445,-",
+                new BigDecimal("0"),
+                image4));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Julemedister med hjemmelavet rødkål",
+                "JULE MENU TIL KR. 475,- PR. PERSON - Søndag til onsdag og KR. 445,-",
+                new BigDecimal("0"),
+                image5));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Hjemmelavet ris a la mande",
+                "JULE MENU TIL KR. 475,- PR. PERSON - Søndag til onsdag og KR. 445,-",
+                new BigDecimal("0"),
+                image6));
+
+        // Save menu items to repository
+        menuItemRepository.saveAll(menuItems);
+
+        // Update menu item photos
+        image1.setMenuItem(menuItems.get(0));
+        imageRepository.save(image1);
+        image2.setMenuItem(menuItems.get(1));
+        imageRepository.save(image2);
+
+        // Create menu
+        Menu menu = new Menu(null, "JULEMENU 2023", menuItems);
+
+        // Save menu to repository
+        menuRepository.save(menu);
+    }
+
+    public void createSelskabsmenu() throws IOException {
+        // Create menu items
+        List<MenuItem> menuItems = new ArrayList<>();
+
+        Image image1 = createOrGetFoto(
+                "https://example.com/images/karrysild.jpg",
+                "src/main/resources/static/food_1.jpg",
+                null);
+        Image image2 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_2.jpg",
+                null);
+        Image image3 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_3.jpg",
+                null);
+        Image image4 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_4.jpg",
+                null);
+        Image image5 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_5.jpg",
+                null);
+        Image image6 = createOrGetFoto(
+                "https://example.com/images/smoked-mackerel.jpg",
+                "src/main/resources/static/food_6.jpg",
+                null);
+
+
+        menuItems.add(new MenuItem(
+                null,
+                "Røget Fanø laks m. dildcreme",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image1));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Rejecocktail",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image2));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Oksetyndsteg m. årstidens grønt og hjemmelavet bearnaise",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image3));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Kalvefilet m. årstidens grønt og rødvinssovs",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image4));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Gl. Dags æblekage",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image5));
+
+        menuItems.add(new MenuItem(
+                null,
+                "Dagens dessert",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image6));
+        menuItems.add(new MenuItem(
+                null,
+                "Ostetallerken m. kiks og druer (+25)",
+                "2 retter kr. 325,- 3 retter kr. 375,-",
+                new BigDecimal("0"),
+                image6));
+
+
+        // Save menu items to repository
+        menuItemRepository.saveAll(menuItems);
+
+        // Update menu item photos
+        image1.setMenuItem(menuItems.get(0));
+        imageRepository.save(image1);
+        image2.setMenuItem(menuItems.get(1));
+        imageRepository.save(image2);
+
+        // Create menu
+        Menu menu = new Menu(null, "Selskabsmenu", menuItems);
+
+        // Save menu to repository
+        menuRepository.save(menu);
+    }
 
     public void createDrinkMenu() throws IOException {
         // Create menu items
@@ -1169,9 +1464,13 @@ public class InitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         // Create basic lunch menu
 //        createBasicLunchMenu();
 //        createBasicDinnerMenu();
+//        createMenuOver15();
+//        createJuleMenu();
+//        createSelskabsmenu();
 //        createDrinkMenu();
 //        createSnapMenu();
 //        createSodavandMenu();
