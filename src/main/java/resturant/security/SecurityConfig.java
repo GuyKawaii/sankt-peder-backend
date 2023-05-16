@@ -138,6 +138,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/demo/admin").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/api/demo/user").hasAuthority("USER")
                 .requestMatchers(HttpMethod.GET, "/api/demo/user-fromtoken").permitAll()
+
                 // ...
 
                 //necessary to allow for "nice" JSON Errors
