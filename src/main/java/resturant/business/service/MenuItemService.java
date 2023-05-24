@@ -28,6 +28,8 @@ public class MenuItemService {
         this.imageRepository = imageRepository;
     }
 
+
+
     public List<MenuItem> getMenuItems() {
         return menuItemRepository.findAll();
     }
