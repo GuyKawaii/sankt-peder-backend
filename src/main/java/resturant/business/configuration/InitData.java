@@ -1465,66 +1465,23 @@ public class InitData implements CommandLineRunner {
         menuRepository.save(menu);
     }
 
-
-    public void createPDF() {
-
-        String dest = "MenuCard.pdf";
-
-        // HTML template for a single menu item
-        String itemTemplate = "<p>Item: {{itemName}}, Price: {{itemPrice}}</p>";
-
-        // Fetch all menu items
-        List<MenuItem> menuItems = menuItemRepository.findAll();
-
-
-        // Prepare HTML content
-        StringBuilder htmlContentBuilder = new StringBuilder();
-        htmlContentBuilder.append("<h1>Menu Card</h1>");
-
-        // Iterate over all menu items
-        for (MenuItem menuItem : menuItems) {
-            String itemHtml = itemTemplate.replace("{{itemName}}", menuItem.getName())
-                .replace("{{itemPrice}}", String.valueOf(menuItem.getPrice()));
-            htmlContentBuilder.append(itemHtml);
-        }
-
-        // Convert HTML to PDF
-        try {
-            PdfWriter writer = new PdfWriter(dest);
-            PdfDocument pdf = new PdfDocument(writer);
-            Document document = new Document(pdf);
-
-            HtmlConverter.convertToPdf(new ByteArrayInputStream(htmlContentBuilder.toString().getBytes()), pdf);
-
-            document.close();
-            System.out.println("PDF created successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
     @Override
     public void run(String... args) throws Exception {
 
          //Create basic lunch menu
-       createBasicLunchMenu();
-       createBasicDinnerMenu();
-       createMenuOver15();
-       createJuleMenu();
-       createSelskabsmenu();
-       createDrinkMenu();
-       createSnapMenu();
-       createSodavandMenu();
-       createVarmeDrikke();
-       createHvidVinMenu();
-       createRoseVin();
-       createRødVin();
-       createPortVin();
-       createChampagneMenu();
-       //kald på denne metode for at generere PDF. PDF'en bliver gemt i databasen / ude til venstre under gitignore.
-       createPDF();
+//       createBasicLunchMenu();
+//       createBasicDinnerMenu();
+//       createMenuOver15();
+//       createJuleMenu();
+//       createSelskabsmenu();
+//       createDrinkMenu();
+//       createSnapMenu();
+//       createSodavandMenu();
+//       createVarmeDrikke();
+//       createHvidVinMenu();
+//       createRoseVin();
+//       createRødVin();
+//       createPortVin();
+//       createChampagneMenu();
     }
 }
