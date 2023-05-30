@@ -18,6 +18,6 @@ public class MenuItemDTO {
     private String name;
     private String description;
     private BigDecimal price;
-    @JsonProperty("image") // todo change later maybe
+    @JsonProperty("image")
     private Image image;
 }

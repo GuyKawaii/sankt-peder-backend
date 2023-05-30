@@ -85,11 +85,10 @@ public class MenuItemService {
                     menu.getMenuItems().remove(menuItem);
                     menuRepository.save(menu);
                 }
-                // Handle associated Image before deleting MenuItem
                 Image image = menuItem.getImage();
                 if (image != null) {
-                    image.setMenuItem(null); // set the menuItem of the image to null
-                    imageRepository.delete(image);  // delete the image
+                    image.setMenuItem(null);
+                    imageRepository.delete(image);
                     menuItem.setImage(null);
                     menuItemRepository.save(menuItem);
                 }

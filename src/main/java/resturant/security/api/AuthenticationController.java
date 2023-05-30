@@ -74,7 +74,6 @@ public class AuthenticationController {
               .body(new LoginResponse(user.getUsername(),token,roles));
     } catch (BadCredentialsException ex) {
       throw ex;
-      //throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Username or password wrong");
     }
   }
 }

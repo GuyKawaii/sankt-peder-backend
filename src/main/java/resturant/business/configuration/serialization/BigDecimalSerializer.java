@@ -10,14 +10,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-//public class BigDecimalSerializer extends JsonSerializer<BigDecimal> {
-//    @Override
-//    public void serialize(BigDecimal value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-//        gen.writeString(value.toPlainString());
-//    }
-//}
-
-
 public class BigDecimalSerializer extends JsonSerializer<BigDecimal> {
     @Override
     public void serialize(BigDecimal value, JsonGenerator gen, SerializerProvider serializers) throws IOException {

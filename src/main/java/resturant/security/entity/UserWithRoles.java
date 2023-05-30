@@ -61,7 +61,6 @@ public class UserWithRoles implements UserDetails {
     public UserWithRoles() {}
 
 
-   // We will use this constructor when/if users must be created via an HTTP-request
     public UserWithRoles(UserWithRolesRequest body) {
         this.username = body.getUsername();
         this.setPassword(body.getPassword());
@@ -88,7 +87,6 @@ public class UserWithRoles implements UserDetails {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());
     }
 
-    //You can, but are NOT expected to use the fields below
     @Override
     public boolean isAccountNonExpired() {return enabled;}
 

@@ -28,11 +28,11 @@ public class ImageController {
         if (foto.isPresent()) {
             Image foundImage = foto.get();
 
-            // Build the response headers
+            // Building the response headers here
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.IMAGE_JPEG); // or MediaType.IMAGE_PNG
+            headers.setContentType(MediaType.IMAGE_JPEG);
             headers.setContentLength(foundImage.getData().length);
-            headers.set("foto-id", String.valueOf(foundImage.getId())); // Add the foto id to headers
+            headers.set("foto-id", String.valueOf(foundImage.getId()));
 
             return new ResponseEntity<>(foundImage.getData(), headers, HttpStatus.OK);
         } else {
@@ -51,7 +51,6 @@ public class ImageController {
         return imageService.putFoto(image, id);
     }
 
-    // put multiple items
     @PutMapping
     public ResponseEntity<Image> putImages(@RequestBody List<Image> images) {
         return imageService.putFotos(images);

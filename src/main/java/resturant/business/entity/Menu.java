@@ -24,6 +24,5 @@ public class Menu {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "menu_item_id")
     )
-//    @JsonManagedReference
     private List<MenuItem> menuItems = new ArrayList<>();
 }

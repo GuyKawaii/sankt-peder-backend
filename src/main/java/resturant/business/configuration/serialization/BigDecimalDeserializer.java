@@ -9,14 +9,6 @@ import java.math.BigDecimal;
 import java.text.*;
 import java.util.Locale;
 
-//public class BigDecimalDeserializer extends JsonDeserializer<BigDecimawl> {
-//    @Override
-//    public BigDecimal deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-//        return new BigDecimal(p.getValueAsString());
-//    }
-//}
-
-
 public class BigDecimalDeserializer extends JsonDeserializer<BigDecimal> {
     @Override
     public BigDecimal deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {

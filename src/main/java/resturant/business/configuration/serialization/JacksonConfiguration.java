@@ -15,13 +15,11 @@ public class JacksonConfiguration {
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Configure BigDecimal serialization and deserialization
         SimpleModule module = new SimpleModule();
         module.addSerializer(BigDecimal.class, new BigDecimalSerializer());
         module.addDeserializer(BigDecimal.class, new BigDecimalDeserializer());
         objectMapper.registerModule(module);
 
-        // Configure serialization to ignore empty beans
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
         return objectMapper;

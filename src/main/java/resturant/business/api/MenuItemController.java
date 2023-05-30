@@ -41,7 +41,6 @@ public class MenuItemController {
         return menuItemService.putMenuItem(menuItem, id);
     }
 
-    // put multiple items
     @PutMapping("/updateMenuItems")
     public ResponseEntity<?> putItems(@RequestBody List<MenuItem> menuItems) {
         return menuItemService.putMenuItems(menuItems);
@@ -52,7 +51,6 @@ public class MenuItemController {
         return menuItemService.deleteMenuItem(id);
     }
 
-    // Get a menu item by its ID
     @GetMapping("/{menuItemId}")
     public ResponseEntity<MenuItem> getMenuById(@PathVariable(value = "menuItemId") Long menuItemId) {
         MenuItem menuItem = menuItemService.findById(menuItemId);

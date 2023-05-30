@@ -1,9 +1,5 @@
 package resturant.business.configuration;
 
-import com.itextpdf.html2pdf.HtmlConverter;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
 import resturant.business.entity.Image;
 import resturant.business.entity.Menu;
 import resturant.business.entity.MenuItem;
@@ -15,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
@@ -35,14 +30,11 @@ public class InitData implements CommandLineRunner {
     private ImageRepository imageRepository;
 
     private Image createOrGetFoto(String url, String imagePath, MenuItem menuItem) throws IOException {
-        // Check if a Foto with the same URL already exists in the database
         Optional<Image> optionalFoto = imageRepository.findByUrl(url);
 
         if (optionalFoto.isPresent()) {
-            // If it does, reuse it
             return optionalFoto.get();
         } else {
-            // If not, create a new one
             Path path = Paths.get(imagePath);
             byte[] imageData = Files.readAllBytes(path);
             Image image = new Image();
@@ -256,10 +248,8 @@ public class InitData implements CommandLineRunner {
                 new BigDecimal("80"),
                 image6));
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
@@ -273,10 +263,8 @@ public class InitData implements CommandLineRunner {
         image6.setMenuItem(menuItems.get(5));
         imageRepository.save(image6);
 
-        // Create menu
         Menu menu = new Menu(null, "MENU 11.30 - 21.00", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -365,19 +353,15 @@ public class InitData implements CommandLineRunner {
                 image6));
 
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "MIDDAGSRET 18.00 - 21.00", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
     public void createMenuOver15() throws IOException {
@@ -477,19 +461,15 @@ public class InitData implements CommandLineRunner {
                 image6));
 
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "MENUKORT 10-50 PERSONER", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -565,19 +545,15 @@ public class InitData implements CommandLineRunner {
                 new BigDecimal("0"),
                 image6));
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "JULEMENU 2023", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -660,19 +636,15 @@ public class InitData implements CommandLineRunner {
                 image6));
 
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "Selskabsmenu", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -844,19 +816,15 @@ public class InitData implements CommandLineRunner {
                 "",
                 new BigDecimal("0"),
                 image6));
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "DRIKKEVARER", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -952,19 +920,15 @@ public class InitData implements CommandLineRunner {
                 new BigDecimal("0"),
                 image6));
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "SNAPS", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -1045,19 +1009,15 @@ public class InitData implements CommandLineRunner {
                 "",
                 new BigDecimal("0"),
                 image6));
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "SODAVAND", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -1108,19 +1068,15 @@ public class InitData implements CommandLineRunner {
                 "",
                 new BigDecimal("0"),
                 image6));
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "VARME DRIKKE", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -1183,19 +1139,15 @@ public class InitData implements CommandLineRunner {
                 "Flaske 389,-",
                 new BigDecimal("0"),
                 image6));
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "HVIDVIN", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
     public void createRoseVin() throws IOException {
@@ -1239,19 +1191,15 @@ public class InitData implements CommandLineRunner {
                 "Flaske 369,-",
                 new BigDecimal("0"),
                 image6));
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "ROSEVIN", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -1326,19 +1274,15 @@ public class InitData implements CommandLineRunner {
                 "Flaske 695,-",
                 new BigDecimal("0"),
                 image6));
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "RØDVIN", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -1384,19 +1328,15 @@ public class InitData implements CommandLineRunner {
                 new BigDecimal("0"),
                 image6));
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "PORTVIN", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 
@@ -1449,19 +1389,15 @@ public class InitData implements CommandLineRunner {
                 image6));
 
 
-        // Save menu items to repository
         menuItemRepository.saveAll(menuItems);
 
-        // Update menu item photos
         image1.setMenuItem(menuItems.get(0));
         imageRepository.save(image1);
         image2.setMenuItem(menuItems.get(1));
         imageRepository.save(image2);
 
-        // Create menu
         Menu menu = new Menu(null, "CHAMPAGNE OG SPARKLING", menuItems);
 
-        // Save menu to repository
         menuRepository.save(menu);
     }
 

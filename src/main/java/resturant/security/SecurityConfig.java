@@ -41,30 +41,12 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-//    @Bean
-//    public CorsFilter corsFilter() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("http://localhost:63343/", "http://localhost:63343"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-//        configuration.setAllowedHeaders(List.of("*"));
-//        configuration.setAllowCredentials(true);
-//        // Add the following line to set the Access-Control-Allow-Origin header
-//        configuration.addExposedHeader("Access-Control-Allow-Origin");
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//
-//        return new CorsFilter(source);
-//    }
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         System.out.println("CALLED");
         return new BCryptPasswordEncoder();
     }
 
-    // Use this to fine tune the CORS headers, if needed (Not required for this semester)
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source =
@@ -80,14 +62,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //This line is added to make the h2-console work (if needed)
         http.headers().frameOptions().disable();
         http
                 .cors().and().csrf().disable()
 
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                //REF: https://mflash.dev/post/2021/01/19/error-handling-for-spring-security-resource-server/
                 .exceptionHandling((exceptions) -> exceptions
                         .authenticationEntryPoint(new CustomOAuth2AuthenticationEntryPoint())
                         .accessDeniedHandler(new CustomOAuth2AccessDeniedHandler())
@@ -97,22 +77,17 @@ public class SecurityConfig {
                 .jwtAuthenticationConverter(authenticationConverter());
 
         http.authorizeHttpRequests((authorize) -> authorize
-                //Obviously we need to be able to login without being logged in :-)
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
 
-                // menu endpoints
 
 
-                //Required in order to use the h2-console
                 .requestMatchers("/h2*/**").permitAll()
 
                 .requestMatchers("/").permitAll() //Allow the default index.html file
 
-                //Next two lines only required if you plan to do the cookie/session-demo from within this project
                 .requestMatchers("/session-demo.html").permitAll()
                 .requestMatchers("/api/cookie/**").permitAll()
 
-                //Allow anonymous access to this endpoint
                 .requestMatchers(HttpMethod.GET, "/menu/menus").permitAll()
                 .requestMatchers(HttpMethod.GET, "/menu/{menuId}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/menu/{menuId}/items").permitAll()
@@ -140,22 +115,12 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/demo/user-fromtoken").permitAll()
                 .requestMatchers(HttpMethod.POST, "/generate-pdf").permitAll()
 
-                // ...
-
-                //necessary to allow for "nice" JSON Errors
                 .requestMatchers("/error").permitAll()
 
-                //.requestMatchers("/", "/**").permitAll()
 
-
-                // ### REMOVE LATER ###
                 .requestMatchers("/h2-console").permitAll()
 
-                // .requestMatchers(HttpMethod.GET,"/api/demo/anonymous").permitAll());
-
-                // Demonstrates another way to add roles to an endpoint
-                // .requestMatchers(HttpMethod.GET, "/api/demo/admin").hasAuthority("ADMIN")
-                .requestMatchers("/favicon.ico").permitAll() // Allow requests to favicon.ico
+                .requestMatchers("/favicon.ico").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();
@@ -171,7 +136,6 @@ public class SecurityConfig {
         return jwtAuthenticationConverter;
     }
 
-    /* Initialize static value "secret" */
     @Value("${app.secret-key}")
     private String secretKey;
     public static String tokenSecret;
@@ -180,7 +144,6 @@ public class SecurityConfig {
     public void setStaticValue(String secretKey) {
         SecurityConfig.tokenSecret = secretKey;
     }
-    /* End of Initialize static value "secret" */
 
     @Bean
     public JwtEncoder jwtEncoder() throws JOSEException {
@@ -199,7 +162,6 @@ public class SecurityConfig {
     }
 
 
-    //TBD --> IS THIS THE RIGHT WAY
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
             throws Exception {
